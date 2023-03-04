@@ -166,7 +166,7 @@ country_dropdown = alt.binding_select(options=countries, name='Select country:')
 country_select = alt.selection_single(fields=['NAME'], bind=country_dropdown, init={'NAME':'Aruba'})
 
 
-dose_stacked = alt.Chart(df[df.dose_num.notna()]).mark_bar(size=8).encode(
+dose_stacked = alt.Chart(df[(df.dose_num.notna()) & (df.dose_num!='nan')]).mark_bar(size=8).encode(
     x=alt.X('YEAR', axis=alt.Axis(format=".0f")),
     y=alt.Y('COVERAGE:Q', title='Coverage (%)'),
     color=alt.Color('dose_num:N', title='Dose #', sort='descending'),
@@ -192,5 +192,6 @@ chart1 = alt.vconcat(bubble, dose_stacked
 )
 chart1
 
-df[df.dose_num.isna()].shape
-df[df.dose_num=='nan'].shape
+print('NaN count:', df[df.dose_num.isna()].shape)
+print('String nan count: ', df[df.dose_num=='nan'].shape)
+
