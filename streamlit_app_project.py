@@ -172,7 +172,7 @@ dose_stacked = alt.Chart(df[df.dose_num.notna()]).mark_bar(size=6).encode(
     y=alt.Y('COVERAGE:Q', title='Vaccine coverage (% target population)'),
     color=alt.Color('dose_num:N', title='Dose #', sort='descending'),
     order=alt.Order('dose_num:N', sort='descending')
-).properties(title='Vaccine coverage by dose number over time'
+).properties(title='Vaccine coverage by dose number over time',
              width=450,
              height=600
 ).configure_title(anchor='middle'
