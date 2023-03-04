@@ -100,9 +100,9 @@ bubble = alt.Chart(comp_region[comp_region.YEAR==year]).mark_circle().encode(
     disease_select
 ).transform_filter(
     disease_select
-).properties(title='title___',
-             height=600,
-             width=900
+).properties(title='Vaccine coverage vs disease incidence by region',
+             height=450,
+             width=600
 ).configure_title(anchor='middle')
 
 
@@ -173,6 +173,9 @@ dose_stacked = alt.Chart(df[df.dose_num.notna()]).mark_bar(size=6).encode(
     color=alt.Color('dose_num:N', title='Dose #', sort='descending'),
     order=alt.Order('dose_num:N', sort='descending')
 ).properties(title='Vaccine coverage by dose number over time'
+             width=450,
+             height=600
+).configure_title(anchor='middle'
 ).add_selection(
     disease_select
 ).transform_filter(
