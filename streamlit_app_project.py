@@ -88,10 +88,12 @@ diseases = df.DISEASE.unique()
 disease_dropdown = alt.binding_select(options=diseases, name='Select disease:')
 disease_select = alt.selection_single(fields=['DISEASE'], bind=disease_dropdown, init={'DISEASE':'DIPHTHERIA'})
 
+st.write("For Polio, incidence is for 1,000,000 population *under age 15*")
+
 #build chart
 bubble = alt.Chart(comp_region[comp_region.YEAR==year]).mark_circle().encode(
     x=alt.X('COVERAGE:Q', title='Vaccine coverage (% of target population)'),
-    y=alt.Y('INCIDENCE_RATE:Q', title='Disease incidence per 1,000,000 population under age 15'),
+    y=alt.Y('INCIDENCE_RATE:Q', title='Disease incidence per 1,000,000 population'),
     color=alt.Color('NAME:N', title='WHO Region'),
     size=alt.Size('TARGET_NUMBER:Q', title='Target population size')
 ).add_selection(
