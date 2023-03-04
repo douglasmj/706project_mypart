@@ -103,3 +103,60 @@ bubble = alt.Chart(comp_region[comp_region.YEAR==year]).mark_circle().encode(
 )
 
 bubble
+
+
+
+####
+# for stacked dose bar chart
+####
+
+#add dose number column
+                #diphtheria
+df['dose_num'] = np.where(df.ANTIGEN=='DTPCV1', 1,
+                 np.where(df.ANTIGEN=='DTPCV3', 3,
+                 np.where(df.ANTIGEN=='DIPHCV4', 4,
+                 np.where(df.ANTIGEN=='DIPHCV5', 'final', 
+                
+                #polio
+                 np.where(df.ANTIGEN=='IPV1', 1,
+                 np.where(df.ANTIGEN=='IPV2', 2,
+                 np.where(df.ANTIGEN=='POL3', 'final',
+                
+                 #measles
+                 np.where(df.ANTIGEN=='MCV1', 1,
+                 np.where(df.ANTIGEN=='MCV2', 'final', 
+
+                #pertussis
+                 #np.where((df.ANTIGEN=='DTPCV1') & (df.DISEASE_2=='PERTUSSIS'), 1,
+                 #np.where((df.ANTIGEN=='DTPCV3') & (df.DISEASE_2=='PERTUSSIS'), 'final',
+                 np.where(df.ANTIGEN=='PERCV4', 'final',
+                 np.where(df.ANTIGEN=='PERCV_PW', 'booster',
+
+                #rubella
+                np.where(df.ANTIGEN=='RCV1', 'final',
+
+                 #tetanus
+                 np.where(df.ANTIGEN=='TT2PLUS', 'final',
+                 np.where(df.ANTIGEN=='TTCV4','booster',
+                 np.where(df.ANTIGEN=='TTCV5','booster',
+                 np.where(df.ANTIGEN=='TTCV6','booster', 
+
+                #yellow fever
+                np.where(df.ANTIGEN=='YFV', 'final',
+
+                #japanese encephalitis
+                np.where(df.ANTIGEN=='JAPENC', 'final',
+                 np.where(df.ANTIGEN=='JAPENC_1', 'final', np.NaN)))))))))))))))))))
+
+
+# Bar chart for doses
+
+alt.Chart(df).mark_bar().encode(
+    x=alt.X('YEAR'),
+    y=alt.Y('COVERAGE'),
+    color=alt.Color('dose_num', title='Dose #')
+).add_selection(
+    disease_select
+).transform_filter(
+    disease_select
+)
