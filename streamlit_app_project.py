@@ -168,12 +168,12 @@ country_select = alt.selection_single(fields=['NAME'], bind=country_dropdown, in
 
 dose_stacked = alt.Chart(df[df.dose_num.notna()]).mark_bar(size=6).encode(
     x=alt.X('YEAR', axis=alt.Axis(format=".0f")),
-    y=alt.Y('COVERAGE:Q', title='Vaccine coverage (% target population)'),
+    y=alt.Y('COVERAGE:Q', title='Coverage (%)'),
     color=alt.Color('dose_num:N', title='Dose #', sort='descending'),
     order=alt.Order('dose_num:N', sort='descending')
 ).properties(title='Vaccine coverage by dose number over time',
              width=500,
-             height=150
+             height=75
 #).configure_title(anchor='middle'
 ).add_selection(
     disease_select
@@ -186,5 +186,11 @@ dose_stacked = alt.Chart(df[df.dose_num.notna()]).mark_bar(size=6).encode(
 
 #dose_stacked
 
-chart1 = bubble & dose_stacked
+chart1 = alt.vconcat(bubble, dose_stacked
+).resolve_scale(
+    color='independent'
+)
 chart1
+
+df[df.dose_num.isna()].shape
+df[df.dose_num=='nan'].shape
