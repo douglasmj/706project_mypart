@@ -100,7 +100,11 @@ bubble = alt.Chart(comp_region[comp_region.YEAR==year]).mark_circle().encode(
     disease_select
 ).transform_filter(
     disease_select
-)
+).properties(title='title___',
+             height=300,
+             width=450
+).configure_title(anchor='middle')
+
 
 bubble
 
@@ -151,14 +155,24 @@ df['dose_num'] = np.where(df.ANTIGEN=='DTPCV1', 1,
 
 # Bar chart for doses
 
-dose_stacked = alt.Chart(df).mark_bar().encode(
+# Bar chart for doses
+#disease selector
+regions = df[df.GROUP=='WHO_REGIONS'].NAME.unique()
+region_dropdown = alt.binding_select(options=regions, name='Select region:')
+region_select = alt.selection_single(fields=['NAME'], bind=region_dropdown, init={'NAME':'African Region'})
+
+
+dose_stacked = alt.Chart(df[df.dose_num.notna()]).mark_bar().encode(
     x=alt.X('YEAR:Q'),
     y=alt.Y('COVERAGE:Q'),
-    color=alt.Color('dose_num:N', title='Dose #')
+    color=alt.Color('dose_num:N', title='Dose #', sort='descending')
 ).add_selection(
     disease_select
 ).transform_filter(
     disease_select
-)
+).add_selection(
+    region_select
+).transform_filter(
+    region_select)
 
 dose_stacked
