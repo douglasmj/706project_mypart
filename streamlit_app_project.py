@@ -187,3 +187,4 @@ dose_stacked = alt.Chart(df[df.dose_num.notna()]).mark_bar(size=6).encode(
 #dose_stacked
 
 chart1 = bubble & dose_stacked
+chart1
