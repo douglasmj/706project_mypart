@@ -79,17 +79,17 @@ comp_region = df_last_admin[df_last_admin.GROUP=='WHO_REGIONS']
 ####
 
 #slider for year 
-year1 = st.slider('Year', min_value=float(df.YEAR.min()), max_value=float(df.YEAR.max()), step=1.0, format='%d')
+year = st.slider('Year', min_value=float(df.YEAR.min()), max_value=float(df.YEAR.max()), step=1.0, format='%d')
 
 #subset_lastdose = df_last_admin[df_last_admin["YEAR"] == year]
 
 #disease selector
 diseases = df.DISEASE.unique()
 disease_dropdown = alt.binding_select(options=diseases, name='Select disease:')
-disease_select = alt.selection_single(fields=['DISEASE'], bind=disease_dropdown)
+disease_select = alt.selection_single(fields=['DISEASE'], bind=disease_dropdown, init={'DISEASE':'DIPHTHERIA'})
 
 #build chart
-bubble = alt.Chart(comp_region[comp_region.YEAR==year1]).mark_circle().encode(
+bubble = alt.Chart(comp_region[comp_region.YEAR==year]).mark_circle().encode(
     x=alt.X('COVERAGE:Q', title='Vaccine coverage (% of target population)'),
     y=alt.Y('INCIDENCE_RATE:Q', title='Disease incidence per 1,000,000 population under age 15'),
     color=alt.Color('NAME:N', title='WHO Region'),
