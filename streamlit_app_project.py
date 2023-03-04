@@ -101,7 +101,7 @@ bubble = alt.Chart(comp_region[comp_region.YEAR==year]).mark_circle().encode(
 ).transform_filter(
     disease_select
 ).properties(title='Vaccine coverage vs disease incidence by region',
-             height=250,
+             height=180,
              width=500)
 #).configure_title(anchor='middle')
 
@@ -156,9 +156,9 @@ df['dose_num'] = np.where(df.ANTIGEN=='DTPCV1', 1,
 
 # Bar chart for doses
 #region selector
-#regions = df[df.GROUP=='WHO_REGIONS'].NAME.unique()
-#region_dropdown = alt.binding_select(options=regions, name='Select region:')
-#region_select = alt.selection_single(fields=['NAME'], bind=region_dropdown, init={'NAME':'African Region'})
+regions = df[df.GROUP=='WHO_REGIONS'].NAME.unique()
+region_dropdown = alt.binding_select(options=regions, name='Select region:')
+region_select = alt.selection_single(fields=['NAME'], bind=region_dropdown, init={'NAME':'African Region'})
 
 #country selector
 countries = df[df.GROUP=='COUNTRIES'].NAME.unique()
@@ -166,7 +166,7 @@ country_dropdown = alt.binding_select(options=countries, name='Select country:')
 country_select = alt.selection_single(fields=['NAME'], bind=country_dropdown, init={'NAME':'Aruba'})
 
 
-dose_stacked = alt.Chart(df[df.dose_num.notna()]).mark_bar(size=6).encode(
+dose_stacked = alt.Chart(df[df.dose_num.notna()]).mark_bar(size=8).encode(
     x=alt.X('YEAR', axis=alt.Axis(format=".0f")),
     y=alt.Y('COVERAGE:Q', title='Coverage (%)'),
     color=alt.Color('dose_num:N', title='Dose #', sort='descending'),
