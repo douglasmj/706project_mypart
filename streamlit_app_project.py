@@ -151,12 +151,14 @@ df['dose_num'] = np.where(df.ANTIGEN=='DTPCV1', 1,
 
 # Bar chart for doses
 
-alt.Chart(df).mark_bar().encode(
-    x=alt.X('YEAR'),
-    y=alt.Y('COVERAGE'),
-    color=alt.Color('dose_num', title='Dose #')
+dose_stacked = alt.Chart(df).mark_bar().encode(
+    x=alt.X('YEAR:Q'),
+    y=alt.Y('COVERAGE:Q'),
+    color=alt.Color('dose_num:N', title='Dose #')
 ).add_selection(
     disease_select
 ).transform_filter(
     disease_select
 )
+
+dose_stacked
