@@ -60,6 +60,7 @@ dis_lim = dis[dis.DISEASE.isin(common_diseases)]
 df = pd.merge(vax_lim, dis_lim, on=['GROUP', 'CODE', 'NAME', 'YEAR', 'DISEASE'], how='left')
 
 #Selecting just the rows for the final dose vaccines:
+WHO_completed_series = ['DIPHCV5', 'POL3', 'MCV2', 'DTPCV3',  'RCV1', 'TT2PLUS', 'YFV', 'JAPENC']
 df_last_dose = df[df['ANTIGEN'].isin(WHO_completed_series)]
 
 
@@ -82,6 +83,12 @@ year1 = st.slider('Year', min_value=float(df.YEAR.min()), max_value=float(df.YEA
 
 #subset_lastdose = df_last_admin[df_last_admin["YEAR"] == year]
 
+#disease selector
+diseases = df.DISEASE.unique()
+disease_dropdown = alt.binding_select(options=diseases, name='Select disease:')
+disease_select = alt.selection_single(fields=['DISEASE'], bind=disease_dropdown)
+
+#build chart
 bubble = alt.Chart(comp_region[comp_region.YEAR==year1]).mark_circle().encode(
     x=alt.X('COVERAGE:Q', title='Vaccine coverage (% of target population)'),
     y=alt.Y('INCIDENCE_RATE:Q', title='Disease incidence per 1,000,000 population under age 15'),
