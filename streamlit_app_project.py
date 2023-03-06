@@ -242,4 +242,4 @@ ds_plot = alt.Chart(dev_stat_short, title = title).mark_bar().encode(
 #   , color='red'  
 
 # plot4 # Render it!
-ds_plot.display()
+ds_plot
