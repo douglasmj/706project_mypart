@@ -1,0 +1,4 @@
+ipython
+altair
+streamlit
+vega_datasets
