@@ -195,3 +195,51 @@ chart1
 print('NaN count:', df[df.dose_num.isna()].shape)
 print('String nan count: ', df[df.dose_num=='nan'].shape)
 
+
+
+
+
+
+### Filtering the vaccine dataframe for only the development status group ###
+
+dev_status = vax[vax.GROUP=='DEVELOPMENT_STATUS']
+
+### creating the vaccine list for the development status vaccine coverage plot ###
+vxlst = ['BCG', 'DTPCV3', 'HEPB3', 'HIB3', 'MCV2', 'PCV3', 'POL3', 'RCV1', 'ROTAC', 'YFV']
+dev_stat_short = dev_status[dev_status['ANTIGEN'].isin(vxlst)]
+
+### Naming the extra vaccines ###
+
+DTP_words = '|'.join(['DTP']) 
+HepB_words = '|'.join(['HepB'])
+BCG_words = '|'.join(['BCG'])
+Hib_words = '|'.join(['Hib'])
+Rotavirus_words = '|'.join(['Rotavirus'])
+Pneumococcal_words = '|'.join(['Pneumococcal'])
+
+dev_stat_short.loc[dev_stat_short.ANTIGEN_DESCRIPTION.str.contains(DTP_words), 'DISEASE'] = 'DIPHTHERIA,TETANUS,PERTUSSIS'
+dev_stat_short.loc[dev_stat_short.ANTIGEN_DESCRIPTION.str.contains(HepB_words), 'DISEASE'] = 'HEPATITIS B'
+dev_stat_short.loc[dev_stat_short.ANTIGEN_DESCRIPTION.str.contains(BCG_words), 'DISEASE'] = 'TUBERCULOSIS'
+dev_stat_short.loc[dev_stat_short.ANTIGEN_DESCRIPTION.str.contains(Hib_words), 'DISEASE'] = 'HAEMOPHILUS INFLUENZAE'
+dev_stat_short.loc[dev_stat_short.ANTIGEN_DESCRIPTION.str.contains(Rotavirus_words), 'DISEASE'] = 'ROTAVIRUS'
+dev_stat_short.loc[dev_stat_short.ANTIGEN_DESCRIPTION.str.contains(yellowfever_words), 'DISEASE'] = 'YELLOW FEVER'
+dev_stat_short.loc[dev_stat_short.ANTIGEN_DESCRIPTION.str.contains(Pneumococcal_words), 'DISEASE'] = 'PNEUMOCOCCUS'
+
+
+### Vaccine coverage by development status plot ###
+
+title = alt.TitleParams('Vaccine Coverage by Development Status', anchor='middle', fontSize=18)
+ds_plot = alt.Chart(dev_stat_short, title = title).mark_bar().encode(
+    x=alt.X('NAME:N', title=' '),
+    y=alt.Y('COVERAGE:Q', axis=alt.Axis(title='Vaccine Coverage'), scale=alt.Scale(domain=[25, 100], clamp=True)), #
+    color='NAME:N',
+    facet=alt.Facet('DISEASE:N', title= ' ', columns=5, spacing = 0, align = 'each'),
+).properties(
+    width=100,
+    height=100
+)
+
+#   , color='red'  
+
+# plot4 # Render it!
+ds_plot.display()
