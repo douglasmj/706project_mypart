@@ -79,7 +79,7 @@ country_df_2 = country_df_nw[['Country', 'country-code']]
 
 for_geo = df_ld.merge(country_df_2, how='inner'
 )
-for_geo = for_geo[for_geo['DISEASE'] == 'DIPHTHERIA']
+#for_geo = for_geo[for_geo['DISEASE'] == 'DIPHTHERIA']
 
 source = alt.topo_feature(data.world_110m.url, 'countries')
 
@@ -198,7 +198,7 @@ comp_region = df_last_admin[df_last_admin.GROUP=='WHO_REGIONS']
 #disease selector
 diseases = df.DISEASE.unique()
 disease_dropdown = alt.binding_select(options=diseases, name='Select disease:')
-disease_select = alt.selection_single(fields=['DISEASE'], bind=disease_dropdown, init={'DISEASE':'DIPHTHERIA'})
+#disease_select = alt.selection_single(fields=['DISEASE'], bind=disease_dropdown, init={'DISEASE':'DIPHTHERIA'})
 
 st.write("For Polio, incidence is for 1,000,000 population *under age 15*")
 
@@ -209,9 +209,9 @@ bubble = alt.Chart(comp_region[comp_region.YEAR==year]).mark_circle().encode(
     color=alt.Color('NAME:N', title='WHO Region'),
     size=alt.Size('TARGET_NUMBER:Q', title='Target population size')
 ).add_selection(
-    disease_select
+    disease_select_marius
 ).transform_filter(
-    disease_select
+    disease_select_marius
 ).properties(title='Vaccine coverage vs disease incidence by region',
              height=180,
              width=500)
