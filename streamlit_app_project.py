@@ -451,7 +451,7 @@ dev_stat_short.loc[dev_stat_short.ANTIGEN_DESCRIPTION.str.contains(Pneumococcal_
 ### Vaccine coverage by development status plot ###
 
 title = alt.TitleParams('Vaccine Coverage by Development Status', anchor='middle', fontSize=18)
-ds_plot = alt.Chart(dev_stat_short, title = title).mark_bar().encode(
+ds_plot = alt.Chart(dev_stat_short[dev_stat_short.YEAR==year], title = title).mark_bar().encode(
     x=alt.X('NAME:O', title=' '),
     y=alt.Y('COVERAGE:Q', axis=alt.Axis(title='Vaccine Coverage')), 
             # scale=alt.Scale(domain=[25, 100], clamp=True)), #
