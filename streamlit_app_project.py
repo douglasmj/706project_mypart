@@ -200,9 +200,10 @@ comp_region = df_last_admin[df_last_admin.GROUP=='WHO_REGIONS']
 #disease_dropdown = alt.binding_select(options=diseases, name='Select disease:')
 #disease_select = alt.selection_single(fields=['DISEASE'], bind=disease_dropdown, init={'DISEASE':'DIPHTHERIA'})
 
-st.write("For Polio, incidence is for 1,000,000 population *under age 15*")
+
 
 #build chart
+st.write("For Polio, incidence is for 1,000,000 population *under age 15*")
 
 comp_region_plot = comp_region[comp_region['DISEASE']==disease_select_marius]
 
