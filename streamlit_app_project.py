@@ -229,7 +229,7 @@ bubble = alt.Chart(comp_region[comp_region.YEAR==year]).mark_circle().encode(
 
 
 df_3 = df_ld.copy()
-df_3 = df_3[df_3['YEAR']==2018]
+df_3 = df_3[df_3['YEAR']==year]
 df_3 = df_3[df_3['DISEASE']==disease_select_marius]
 
 #make a selection for the disease
@@ -268,7 +268,7 @@ chart3_right = alt.Chart(df_3).mark_bar(opacity=0.8, color='red').encode(
 )
 
 chart3 = alt.hconcat(chart3_left, chart3_right).properties(
-    title='Vaccine Coverage and Disease Incidence Rate in 2018'
+    title=f'Vaccine Coverage and Disease Incidence Rate in {year}'
 ).resolve_scale(
     y = 'shared'
 )
