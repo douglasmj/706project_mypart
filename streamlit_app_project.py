@@ -152,7 +152,7 @@ chart_coverage = chart_base.mark_geoshape().encode(
     selector
     ).properties(
 ###Need to fix the year in title?
-    title=f'Vaccine Coverage Worldwide {year}'
+    title=f'Vaccine Coverage Worldwide {int(year)}'
 )
 
 
@@ -166,7 +166,7 @@ chart_incidence = chart_base.mark_geoshape().encode(
     selector
 ).properties(
 ###Again the year?
-    title=f'World Disease Incidence Rate {year}'
+    title=f'World Disease Incidence Rate {int(year)}'
 )
 
 chart2 = alt.vconcat(background + chart_coverage, background + chart_incidence
@@ -268,7 +268,7 @@ chart3_right = alt.Chart(df_3).mark_bar(opacity=0.8, color='red').encode(
 )
 
 chart3 = alt.hconcat(chart3_left, chart3_right).properties(
-    title=f'Vaccine Coverage and Disease Incidence Rate in {year}'
+    title=f'Vaccine Coverage and Disease Incidence Rate in {int(year)}'
 ).resolve_scale(
     y = 'shared'
 )
