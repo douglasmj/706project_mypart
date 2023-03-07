@@ -84,9 +84,6 @@ for_geo = df_ld.merge(country_df_2, how='inner'
 source = alt.topo_feature(data.world_110m.url, 'countries')
 
 
-# filter the data based on the year selected
-for_geo = for_geo[for_geo['YEAR']==year]
-
 st.header("Global Vaccine-Preventable Disease Dashboard")
 
 width = 600
@@ -95,6 +92,9 @@ project = 'equirectangular'
 
 #slider for year 
 year = st.slider('Year', min_value=float(df.YEAR.min()), max_value=float(df.YEAR.max()), step=1.0, format='%d')
+
+# filter the data based on the year selected
+for_geo = for_geo[for_geo['YEAR']==year]
 
 # a gray map using as the visualization background
 background = alt.Chart(source
