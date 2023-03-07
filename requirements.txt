@@ -1,4 +1,5 @@
 ipython
 altair
 streamlit
+numpy
 vega_datasets
