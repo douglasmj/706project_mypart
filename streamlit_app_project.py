@@ -390,9 +390,9 @@ countries = df[df.GROUP=='COUNTRIES'].NAME.unique()
 country_dropdown = alt.binding_select(options=countries, name='Select country:')
 country_select = alt.selection_single(fields=['NAME'], bind=country_dropdown, init={'NAME':'Aruba'})
 
-dose_num_plot = dose_num[dose_num.DISEASE==disease_select_marius]
+df_plotbar = df[df.DISEASE==disease_select_marius]
 
-dose_stacked = alt.Chart(df[(df.dose_num_plot.notna()) & (df.dose_num_plot!='nan')]).mark_bar(size=8).encode(
+dose_stacked = alt.Chart(df_plotbar[(df_plotbar.dose_num.notna()) & (df_plotbar.dose_num!='nan')]).mark_bar(size=8).encode(
     x=alt.X('YEAR', axis=alt.Axis(format=".0f")),
     y=alt.Y('COVERAGE:Q', title='Coverage (%)'),
     color=alt.Color('dose_num:N', title='Dose #', sort='descending'),
