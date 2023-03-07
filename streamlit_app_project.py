@@ -204,7 +204,7 @@ st.write("For Polio, incidence is for 1,000,000 population *under age 15*")
 
 #build chart
 
-comp_region_plot = comp_region_plot[comp_region_plot['DISEASE']==disease_select_marius]
+comp_region_plot = comp_region[comp_region['DISEASE']==disease_select_marius]
 
 bubble = alt.Chart(comp_region_plot[comp_region_plot.YEAR==year]).mark_circle().encode(
     x=alt.X('COVERAGE:Q', title='Vaccine coverage (% of target population)'),
