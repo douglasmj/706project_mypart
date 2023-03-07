@@ -241,17 +241,10 @@ df_3 = df_3[df_3['DISEASE']==disease_select_marius]
 df_3 = df_3[df_3['COVERAGE'].notna()]
 df_3 = df_3[df_3['INCIDENCE_RATE'].notna()]
 
-
-# add brush to the chart to select a range of Countries
-country_brush = alt.selection_interval(encodings = ['y'], resolve='global')
-
-
-# make a bar chart showing the vaccine coverage for each disease in 2018
+# make a bar chart showing the vaccine coverage for each disease
 chart3_left = alt.Chart(df_3).mark_bar(opacity=0.8).encode(
     x=alt.X('COVERAGE', scale= alt.Scale(reverse=True)),
-    y=alt.Y('Country', axis = None, sort=alt.EncodingSortField(field="COVERAGE", op="sum", order="descending"))
-).transform_filter(
-    country_brush
+    y=alt.Y('Country', axis = None, sort=alt.EncodingSortField(field="COVERAGE", order="descending"))
 ).properties(
     width=300,
     height=750
@@ -260,11 +253,7 @@ chart3_left = alt.Chart(df_3).mark_bar(opacity=0.8).encode(
 
 chart3_right = alt.Chart(df_3).mark_bar(opacity=0.8, color='red').encode(
     x=alt.X('INCIDENCE_RATE', scale= alt.Scale(reverse=False)) ,
-    y=alt.Y('Country', sort=alt.EncodingSortField(field="COVERAGE", op="sum", order="descending")),
-).add_selection(
-    country_brush
-).transform_filter(
-    country_brush
+    y=alt.Y('Country', sort=alt.EncodingSortField(field="COVERAGE", order="descending")),
 ).properties(
     width=300,
     height=750
