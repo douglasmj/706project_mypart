@@ -387,7 +387,7 @@ region_select = alt.selection_single(fields=['NAME'], bind=region_dropdown, init
 
 #country selector
 countries = df[df.GROUP=='COUNTRIES'].NAME.unique()
-country_dropdown = alt.binding_select(options=countries, name='Select country:')
+country_dropdown = alt.binding_select(options=countries, name='Select country to view doses over time:')
 country_select = alt.selection_single(fields=['NAME'], bind=country_dropdown, init={'NAME':'Aruba'})
 
 df_plotbar = df[df.DISEASE==disease_select_marius]
