@@ -91,7 +91,7 @@ height  = 300
 project = 'equirectangular'
 
 #slider for year 
-year = st.slider('Year', min_value=float(df.YEAR.min()), max_value=float(df.YEAR.max()), step=1.0, format='%d', value=2018)
+year = st.slider('Year', min_value=float(df.YEAR.min()), max_value=float(df.YEAR.max()), step=1.0, format='%d', value=2018.0)
 
 # filter the data based on the year selected
 for_geo = for_geo[for_geo['YEAR']==year]
