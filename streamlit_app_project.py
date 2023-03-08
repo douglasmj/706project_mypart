@@ -91,7 +91,7 @@ height  = 300
 project = 'equirectangular'
 
 #slider for year 
-year = st.slider('Year', min_value=float(df.YEAR.min()), max_value=float(df.YEAR.max()), step=1.0, format='%d')
+year = st.slider('Year', min_value=float(df.YEAR.min()), max_value=float(df.YEAR.max()), step=1.0, format='%d', value=2018)
 
 # filter the data based on the year selected
 for_geo = for_geo[for_geo['YEAR']==year]
@@ -408,8 +408,8 @@ chart1 = alt.vconcat(bubble, dose_stacked
 )
 chart1
 
-print('NaN count:', df[df.dose_num.isna()].shape)
-print('String nan count: ', df[df.dose_num=='nan'].shape)
+#print('NaN count:', df[df.dose_num.isna()].shape)
+#print('String nan count: ', df[df.dose_num=='nan'].shape)
 
 
 
