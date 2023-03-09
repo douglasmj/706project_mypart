@@ -241,11 +241,15 @@ df_3 = df_3[df_3['DISEASE']==disease_select_marius]
 # Filter the data to include only the counties for which we have both COVERAGE and INCIDENCE_RATE data
 df_3 = df_3[df_3['COVERAGE'].notna()]
 df_3 = df_3[df_3['INCIDENCE_RATE'].notna()]
+# average the data by country
+df_3 = df_3.groupby('Country').mean().reset_index()
+# remove all countries that have the key "Region" in their name
+df_3 = df_3[~df_3['Country'].str.contains('Region')]
 
 # make a bar chart showing the vaccine coverage for each disease
 chart3_left = alt.Chart(df_3).mark_bar(opacity=0.8).encode(
     x=alt.X('COVERAGE', scale= alt.Scale(reverse=True)),
-    y=alt.Y('Country', axis = None, sort=alt.EncodingSortField(field="COVERAGE", order="descending"))
+    y=alt.Y('Country', axis = None, sort="-x")
 ).properties(
     width=300,
     height=750
@@ -262,11 +266,17 @@ chart3_right = alt.Chart(df_3).mark_bar(opacity=0.8, color='red').encode(
 
 chart3 = alt.hconcat(chart3_left, chart3_right).properties(
     title=f'Vaccine Coverage and Disease Incidence Rate in {int(year)}'
-).resolve_scale(
-    y = 'shared'
 )
+# .resolve_scale(
+#     y = 'shared'
+# )
+
+print(df_3.head())
+print(df_3.shape)
 
 chart3
+
+
 
 # end of butterfly bar chart
 
