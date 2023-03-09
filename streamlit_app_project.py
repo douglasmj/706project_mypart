@@ -107,7 +107,7 @@ background = alt.Chart(source
 ).project(project)
 
 ######################
-# P3.4 create a selector to link two map visualizations
+#selector to link two map visualizations
 selector = alt.selection_single(
     empty='all', fields = ['Country']
 )
@@ -138,16 +138,8 @@ coverage_scale = alt.Scale(domain=[for_geo['COVERAGE'].min(), for_geo['COVERAGE'
 coverage_color = alt.Color(field="COVERAGE:Q", type="quantitative", scale=coverage_scale)
 
 chart_coverage = chart_base.mark_geoshape().encode(
-    color=alt.Color('COVERAGE:Q', type="quantitative", scale=coverage_scale), 
+    color=alt.Color('COVERAGE:Q', type="quantitative", scale=coverage_scale, title='Coverage (%)'), 
     tooltip=['COVERAGE:Q', 'Country:N']  
-    ######################
-    # P3.1 map visualization showing the mortality rate
-    # add your code here
-    # ...
-    ######################
-    # P3.3 tooltip
-    # add your code here
-    # ...
     ).transform_filter(
     selector
     ).properties(
@@ -160,7 +152,7 @@ chart_coverage = chart_base.mark_geoshape().encode(
 # incidence_scale = alt.Scale(domain=[for_geo['INCIDENCE_RATE'].min(), for_geo['INCIDENCE_RATE'].max()], scheme='yellowgreenblue')
 incidence_scale = alt.Scale(domain=[for_geo['INCIDENCE_RATE'].min(), for_geo['INCIDENCE_RATE'].max()], scheme='yellowgreenblue')
 chart_incidence = chart_base.mark_geoshape().encode(
-    color=alt.Color('INCIDENCE_RATE:Q', type="quantitative", scale=incidence_scale),
+    color=alt.Color('INCIDENCE_RATE:Q', type="quantitative", scale=incidence_scale, title='Incidence Rate (per 1,000,000)'),
     tooltip=['INCIDENCE_RATE:Q', 'Country:N'] 
     ).transform_filter(
     selector
@@ -248,7 +240,7 @@ df_3 = df_3[~df_3['Country'].str.contains('Region')]
 
 # make a bar chart showing the vaccine coverage for each disease
 chart3_left = alt.Chart(df_3).mark_bar(opacity=0.8).encode(
-    x=alt.X('COVERAGE', scale= alt.Scale(reverse=True)),
+    x=alt.X('COVERAGE', scale= alt.Scale(reverse=True), title='Vaccine Coverage (%)'),
     y=alt.Y('Country', axis = None, sort="-x")
 ).properties(
     width=300,
@@ -257,7 +249,7 @@ chart3_left = alt.Chart(df_3).mark_bar(opacity=0.8).encode(
 
 
 chart3_right = alt.Chart(df_3).mark_bar(opacity=0.8, color='red').encode(
-    x=alt.X('INCIDENCE_RATE', scale= alt.Scale(reverse=False)) ,
+    x=alt.X('INCIDENCE_RATE', scale= alt.Scale(reverse=False), title='Incidence Rate (per 1,000,000 people)') ,
     y=alt.Y('Country', sort=alt.EncodingSortField(field="COVERAGE", order="descending")),
 ).properties(
     width=300,
@@ -299,7 +291,7 @@ disease_selection_3 = alt.selection_single(
 
 chart5_1 = alt.Chart(df_5).mark_line().encode(
     x= alt.X('YEAR', title='Year', scale=alt.Scale(domain=(1980, 2021))),
-    y='COVERAGE',
+    y=alt.Y('COVERAGE', title='Vaccine Coverage (%)'),
     color='DISEASE'
 ).add_selection(
     disease_selection_3
@@ -313,7 +305,7 @@ chart5_1 = alt.Chart(df_5).mark_line().encode(
 # make another chart that shows the INCIDENCE_RATE over time
 chart5_2 = alt.Chart(df_5).mark_line().encode(
     x= alt.X('YEAR', title='Year', scale=alt.Scale(domain=(1980, 2021))),
-    y='INCIDENCE_RATE',
+    y=alt.Y('INCIDENCE_RATE', title='Disease Incidence Rate (per 1,000,000 people)'),
     color='DISEASE'
 ).transform_filter(
     disease_selection_3
