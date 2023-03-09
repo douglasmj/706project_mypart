@@ -6,4 +6,4 @@ Included above are the publically-available datasets downloaded from the Word He
 
 View the interactive Streamlit visualization at: https://douglasmj-706project-insightsquad-streamlit-app-project-i2zeyw.streamlit.app/ 
 
-WHO data is available here: https://immunizationdata.who.int/listing.html?topic=&location=
+WHO data is available here: https://immunizationdata.who.int/listing.html?topic=&location=  ("Export" button at the top right of each section)
